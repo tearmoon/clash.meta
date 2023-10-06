@@ -42,8 +42,8 @@ var (
 	backupExeName  string // 备份文件名
 	updateExeName  string // 更新后的可执行文件
 
-	baseURL       string = "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo"
-	versionURL    string = "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt"
+	baseURL       string = "https://github.com/shioeri/Clash.Meta/releases/download/Prerelease-Alpha/clash.meta"
+	versionURL    string = "https://github.com/shioeri/Clash.Meta/releases/download/Prerelease-Alpha/version.txt"
 	packageURL    string
 	latestVersion string
 )
@@ -124,7 +124,7 @@ func Update(execPath string) (err error) {
 
 // prepare fills all necessary fields in Updater object.
 func prepare(exePath string) (err error) {
-	updateDir = filepath.Join(workDir, "meta-update")
+	updateDir = filepath.Join(workDir, "update")
 	currentExeName = exePath
 	_, pkgNameOnly := filepath.Split(packageURL)
 	if pkgNameOnly == "" {
@@ -133,12 +133,12 @@ func prepare(exePath string) (err error) {
 
 	packageName = filepath.Join(updateDir, pkgNameOnly)
 	//log.Infoln(packageName)
-	backupDir = filepath.Join(workDir, "meta-backup")
+	backupDir = filepath.Join(workDir, "backup")
 
 	if runtime.GOOS == "windows" {
-		updateExeName = "mihomo" + "-" + runtime.GOOS + "-" + runtime.GOARCH + amd64Compatible + ".exe"
+		updateExeName = "clash.meta" + "-" + runtime.GOOS + "-" + runtime.GOARCH + amd64Compatible + ".exe"
 	} else {
-		updateExeName = "mihomo" + "-" + runtime.GOOS + "-" + runtime.GOARCH + amd64Compatible
+		updateExeName = "clash.meta" + "-" + runtime.GOOS + "-" + runtime.GOARCH + amd64Compatible
 	}
 
 	log.Infoln("updateExeName: %s ", updateExeName)

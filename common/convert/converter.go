@@ -159,11 +159,13 @@ func ConvertsV2Ray(buf []byte) ([]map[string]any, error) {
 			trojan["port"] = urlTrojan.Port()
 			trojan["password"] = urlTrojan.User.Username()
 			trojan["udp"] = true
+			trojan["tfo"] , _ = strconv.ParseBool(query.Get("tfo"))
 			trojan["skip-cert-verify"], _ = strconv.ParseBool(query.Get("allowInsecure"))
 
 			if sni := query.Get("sni"); sni != "" {
 				trojan["sni"] = sni
 			}
+
 			if alpn := query.Get("alpn"); alpn != "" {
 				trojan["alpn"] = strings.Split(alpn, ",")
 			}
@@ -178,6 +180,7 @@ func ConvertsV2Ray(buf []byte) ([]map[string]any, error) {
 				headers := make(map[string]any)
 				wsOpts := make(map[string]any)
 
+				headers["Host"] = query.Get("host")
 				headers["User-Agent"] = RandUserAgent()
 
 				wsOpts["path"] = query.Get("path")
@@ -206,6 +209,10 @@ func ConvertsV2Ray(buf []byte) ([]map[string]any, error) {
 			}
 			query := urlVLess.Query()
 			vless := make(map[string]any, 20)
+
+			vless["tfo"] , _ = strconv.ParseBool(query.Get("tfo"))
+			vless["skip-cert-verify"], _ = strconv.ParseBool(query.Get("allowInsecure"))
+
 			err = handleVShareLink(names, urlVLess, scheme, vless)
 			if err != nil {
 				log.Warnln("error:%s line:%s", err.Error(), line)
@@ -267,8 +274,9 @@ func ConvertsV2Ray(buf []byte) ([]map[string]any, error) {
 			}
 			vmess["udp"] = true
 			vmess["xudp"] = true
+			vmess["tfo"] = true
 			vmess["tls"] = false
-			vmess["skip-cert-verify"] = false
+			vmess["skip-cert-verify"] = true
 
 			vmess["cipher"] = "auto"
 			if cipher, ok := values["scy"]; ok && cipher != "" {

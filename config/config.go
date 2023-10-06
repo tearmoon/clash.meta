@@ -375,15 +375,15 @@ func Parse(buf []byte) (*Config, error) {
 func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 	// config with default value
 	rawCfg := &RawConfig{
-		AllowLan:        false,
+		AllowLan:        true,
 		BindAddress:     "*",
-		IPv6:            true,
+		IPv6:            false,
 		Mode:            T.Rule,
 		GeodataMode:     C.GeodataMode,
 		GeodataLoader:   "memconservative",
-		UnifiedDelay:    false,
+		UnifiedDelay:    true,
 		Authentication:  []string{},
-		LogLevel:        log.INFO,
+		LogLevel:        log.WARNING,
 		Hosts:           map[string]any{},
 		Rule:            []string{},
 		Proxy:           []map[string]any{},
@@ -430,32 +430,40 @@ func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 			Interval:      30,
 		},
 		DNS: RawDNS{
-			Enable:       false,
+			Enable:       true,
 			IPv6:         false,
 			UseHosts:     true,
 			IPv6Timeout:  100,
 			EnhancedMode: C.DNSMapping,
 			FakeIPRange:  "198.18.0.1/16",
 			FallbackFilter: RawFallbackFilter{
-				GeoIP:     true,
-				GeoIPCode: "CN",
+				GeoIP:     false,
+				GeoIPCode: "",
 				IPCIDR:    []string{},
 				GeoSite:   []string{},
 			},
 			DefaultNameserver: []string{
-				"114.114.114.114",
-				"223.5.5.5",
 				"8.8.8.8",
-				"1.0.0.1",
 			},
 			NameServer: []string{
-				"https://doh.pub/dns-query",
-				"tls://223.5.5.5:853",
+				"tls://8.8.8.8:853",
 			},
 			FakeIPFilter: []string{
 				"dns.msftnsci.com",
 				"www.msftnsci.com",
 				"www.msftconnecttest.com",
+			},
+			ProxyServerNameserver: []string{
+				// Telkomsel / By.U
+				"192.168.130.30",
+				"192.168.65.118",
+				// XL
+				"75.2.123.169",
+				"99.83.183.23",
+				"112.215.198.248",
+				"112.215.198.254",
+				// Indosat
+				"114.5.5.5",
 			},
 		},
 		Sniffer: RawSniffer{
@@ -474,9 +482,9 @@ func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 		GeoXUrl: GeoXUrl{
 			Mmdb:    "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb",
 			GeoIp:   "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat",
-			GeoSite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat",
+			GeoSite: "https://github.com/shioeri/domain-list/raw/release/geosite.dat",
 		},
-		ExternalUIURL: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+		ExternalUIURL: "https://github.com/shioeri/yacd/archive/gh-pages.zip",
 	}
 
 	if err := yaml.Unmarshal(buf, rawCfg); err != nil {
