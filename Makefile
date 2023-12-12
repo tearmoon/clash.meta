@@ -11,8 +11,9 @@ else
 VERSION=$(shell git rev-parse --short HEAD)
 endif
 
-BUILDTIME=$(shell date -u)
-GOBUILD=CGO_ENABLED=0 go build -tags with_gvisor -trimpath -ldflags '-X "github.com/metacubex/mihomo/constant.Version=$(VERSION)" \
+BUILDTIME=$(shell TZ=Asia/Jakarta date)
+TAGS=with_gvisor
+GOBUILD=CGO_ENABLED=0 go build -tags $(TAGS) -trimpath -ldflags '-X "github.com/metacubex/mihomo/constant.Version=$(VERSION)" \
 		-X "github.com/metacubex/mihomo/constant.BuildTime=$(BUILDTIME)" \
 		-w -s -buildid='
 

@@ -4,9 +4,9 @@ FILENAMES=$(ls)
 for FILENAME in $FILENAMES
 do
     if [[ ! ($FILENAME =~ ".exe" || $FILENAME =~ ".sh")]];then
-        mv $FILENAME ${FILENAME}-go120
+        mv $FILENAME ${FILENAME}
     elif [[ $FILENAME =~ ".exe" ]];then
-        mv $FILENAME ${FILENAME%.*}-go120.exe
+        mv $FILENAME ${FILENAME%.*}.exe
     else echo "skip $FILENAME"
     fi
 done

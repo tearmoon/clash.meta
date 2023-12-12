@@ -42,8 +42,8 @@ var (
 	backupExeName  string // 备份文件名
 	updateExeName  string // 更新后的可执行文件
 
-	baseURL       string = "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/mihomo"
-	versionURL    string = "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt"
+	baseURL       string = "https://github.com/tearmoon/clash.meta/releases/download/Prerelease-Alpha/mihomo"
+	versionURL    string = "https://github.com/tearmoon/clash.meta/releases/download/Prerelease-Alpha/version.txt"
 	packageURL    string
 	latestVersion string
 )
@@ -133,7 +133,7 @@ func prepare(exePath string) (err error) {
 
 	packageName = filepath.Join(updateDir, pkgNameOnly)
 	//log.Infoln(packageName)
-	backupDir = filepath.Join(workDir, "meta-backup")
+	backupDir = filepath.Join(workDir, "backup")
 
 	if runtime.GOOS == "windows" {
 		updateExeName = "mihomo" + "-" + runtime.GOOS + "-" + runtime.GOARCH + amd64Compatible + ".exe"
