@@ -391,7 +391,7 @@ func Parse(buf []byte) (*Config, error) {
 func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 	// config with default value
 	rawCfg := &RawConfig{
-		AllowLan:          false,
+		AllowLan:          true,
 		BindAddress:       "*",
 		LanAllowedIPs:     []netip.Prefix{netip.MustParsePrefix("0.0.0.0/0"), netip.MustParsePrefix("::/0")},
 		IPv6:              true,
@@ -409,7 +409,7 @@ func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 		ProxyGroup:        []map[string]any{},
 		TCPConcurrent:     false,
 		FindProcessMode:   P.FindProcessStrict,
-		GlobalUA:          "clash.meta",
+		GlobalUA:          "mihomo",
 		Tun: RawTun{
 			Enable:              false,
 			Device:              "",
@@ -456,25 +456,35 @@ func UnmarshalRawConfig(buf []byte) (*RawConfig, error) {
 			EnhancedMode: C.DNSMapping,
 			FakeIPRange:  "198.18.0.1/16",
 			FallbackFilter: RawFallbackFilter{
-				GeoIP:     true,
-				GeoIPCode: "CN",
+				GeoIP:     false,
+				GeoIPCode: "",
 				IPCIDR:    []string{},
 				GeoSite:   []string{},
 			},
 			DefaultNameserver: []string{
-				"114.114.114.114",
-				"223.5.5.5",
-				"8.8.8.8",
-				"1.0.0.1",
+				"1.1.1.1",
 			},
 			NameServer: []string{
-				"https://doh.pub/dns-query",
-				"tls://223.5.5.5:853",
+				"8.8.8.8",
 			},
 			FakeIPFilter: []string{
 				"dns.msftnsci.com",
 				"www.msftnsci.com",
 				"www.msftconnecttest.com",
+			},
+			ProxyServerNameserver: []string{
+				// Telkomsel / By.U
+				"192.168.130.30",
+				"192.168.65.118",
+				// AXIS
+				"112.215.203.248",
+				// XL
+				"75.2.123.169",
+				"99.83.183.23",
+				"112.215.198.248",
+				"112.215.198.254",
+				// Indosat
+				"114.5.5.5",
 			},
 		},
 		Sniffer: RawSniffer{
